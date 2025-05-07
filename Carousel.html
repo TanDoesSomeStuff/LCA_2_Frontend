@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+  <title>Shop Section</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      color: #2f2f2f;
+      padding: 32px;
+    }
+
+    .carousel-section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      border-left: 4px solid #5b3417;
+      padding-left: 12px;
+      margin-bottom: 24px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 24px;
+      margin-left: 4px;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 78px;
+      padding-bottom: 10px;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none; /* Hide scrollbar */
+    }
+
+    .card {
+      flex: 0 0 auto;
+      width: 180px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .card p {
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    .price {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+  </style>
+
+</head>
+<body>
+
+<section class="carousel-section">
+  <h2 class="section-title">SHOP BY ROOM</h2>
+  <div class="carousel">
+    <div class="card">
+      <img src="living-room.png" alt="Living Room">
+      <p>Living room</p>
+    </div>
+    <div class="card">
+      <img src="bedroom.png" alt="Bedroom">
+      <p>Bedroom</p>
+    </div>
+    <div class="card">
+      <img src="dining-room.png" alt="Dining Room & Kitchen">
+      <p>Dining room & Kitchen</p>
+    </div>
+    <div class="card">
+      <img src="outdoors.png" alt="Outdoor">
+      <p>Outdoor</p>
+    </div>
+    <div class="card">
+      <img src="bathroom.png" alt="Bathroom">
+      <p>Bathroom</p>
+    </div>
+    <div class="card">
+      <img src="homeoffice.png" alt="Office & Workspace">
+      <p>Office & Workspace</p>
+    </div>
+    <div class="card">
+      <img src="entryway.png" alt="Entryway & Hallway">
+      <p>Entryway & Hallway</p>
+    </div>
+  </div>
+</section>
+
+<section class="carousel-section">
+  <h2 class="section-title">NEW ARRIVALS</h2>
+  <p class="section-subtitle">Give your space a refresh with new arrivals dropping weekly</p>
+  <div class="carousel">
+    <div class="card">
+      <img src="wooden-vase.png" alt="Wooden Vase">
+      <p>Wooden Vase<br><span class="price">Rs. 299</span></p>
+    </div>
+    <div class="card">
+      <img src="throw-pillows.png" alt="Throw Pillows">
+      <p>Throw Pillows<br><span class="price">Rs. 499</span></p>
+    </div>
+    <div class="card">
+      <img src="ribbed-candles.png" alt="Ribbed Scented..">
+      <p>Ribbed Scented..<br><span class="price">Rs. 699</span></p>
+    </div>
+    <div class="card">
+      <img src="ceramic-toiletry.png" alt="Ceramic Toiletries">
+      <p>Ceramic Toiletries<br><span class="price">Rs. 369</span></p>
+    </div>
+    <div class="card">
+      <img src="ribbed-candles.png" alt="Ceramic Ribbed..">
+      <p>Ceramic Ribbed..<br><span class="price">Rs. 499</span></p>
+    </div>
+    <div class="card">
+      <img src="nordic-candlestand.png" alt="Nordic Candlestick">
+      <p>Nordic Candlest..<br><span class="price">Rs. 499</span></p>
+    </div>
+    <div class="card">
+      <img src="butterfly-lamp.png" alt="Butterfly Lamp">
+      <p>Butterfly Lamp<br><span class="price">Rs. 1499</span></p>
+    </div>
+  </div>
+</section>
+<script>
+function scrollLeft(carouselId) {
+    const carousel = document.getElementById(carouselId);
+    carousel.scrollBy({
+      left: -300,
+      behavior: 'smooth'
+    });
+  }
+  
+  function scrollRight(carouselId) {
+    const carousel = document.getElementById(carouselId);
+    carousel.scrollBy({
+      left: 300,
+      behavior: 'smooth'});
+    }
+</script>
+</body>
+</html>

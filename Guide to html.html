@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Wayfair Navbar</title>
+  <link rel="icon" type="image/x-icon" href="DP work.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+    }
+
+    .header {
+      background-color: #312019;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Navigation bar */
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin-left: 5rem;
+      margin-right: auto;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-icons .icon {
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: -2rem left;
+      padding: 20px;
+      padding-left: 4rem;
+      background-color: #312019;
+    }
+
+    .search-input {
+      width: 500px;
+      padding: 10px 20px;
+      border: 3px solid #595959;
+      border-radius: 10px;
+      background-color: transparent;
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    .search-input::placeholder {
+      color: #ffffff;
+    }
+
+    /* === HERO IMAGE CAROUSEL === */
+    .hero-carousel {
+      position: relative;
+      width: 100%;
+      height: 77vh;
+      overflow: hidden;
+    }
+
+    .carousel-images {
+      display: flex;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-images img {
+      width: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgb(255, 255, 255);
+      color: #312019;
+      border: none;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .carousel-btn:hover {
+      background-color: #312019;
+      color: white;
+    }
+
+    .prev-btn {
+      left: 60px;
+    }
+
+    .next-btn {
+      right: 60px;
+    }
+
+    /* === HOVER ZOOM CARDS === */
+    .hover-cards {
+      padding: 2rem;
+      background-color: #ffffff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .card {
+      position: relative;
+      height: 600px;
+      width: 550px;
+      overflow: hidden;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .card-image {
+      width: 120%;
+      height: 120%;
+      background-size: cover;
+      background-position: -20px center;
+      transition: transform 0.5s ease;
+    }
+
+    .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      transition: background-color 0.5s ease;
+    }
+
+    .card-content {
+      position: absolute;
+      top: 100px;
+      left: 20px;
+      color: white;
+      z-index: 2;
+    }
+
+    .card h2 {
+      font-size: 2rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .card p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .shop-btn {
+      background-color: white;
+      color: black;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 25px;
+      margin-top: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .shop-btn:hover {
+      background-color: #ddd;
+    }
+
+    /* Hover Effects */
+    .card:hover .card-image {
+      transform: scale(1.1);
+    }
+
+    .card:hover .card-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* === PRODUCT CARD CAROUSELS === */
+    .carousel {
+      display: flex;
+      gap: 30px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 0 20px 20px 20px;
+      scroll-behavior: smooth;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .carousel-section {
+      margin-bottom: 40px;
+    }
+
+    .carousel-section + .carousel-section {
+      margin-top: 40px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      padding-left: 44px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background-color: #5b3417;
+    }
+
+    .section-subtitle {
+      font-size: 20px;
+      color: #666;
+      margin-bottom: 24px;
+      margin-left: 45px;
+    }
+
+    .product-card {
+      min-width: 22%;
+      aspect-ratio: 1 / 1;
+      text-align: center;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .product-card p {
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    .price {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    /* === TESTIMONIAL CAROUSEL === */
+    .testimonial-section {
+      margin: 60px 0;
+    }
+
+    .testimonial-carousel-container {
+      position: relative;
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 0 40px;
+    }
+
+    .testimonial-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 30px;
+      scroll-behavior: smooth;
+      padding-bottom: 20px;
+    }
+
+    .testimonial-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .testimonial-card {
+      flex: 0 0 auto;
+      width: 350px;
+      background-color: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testimonial-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+
+    .testimonial-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .testimonial-card h3 {
+      color: #312019;
+      font-size: 18px;
+    }
+
+    .testimonial-card p {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .testimonial-scroll-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: white;
+      color: #312019;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+
+    .testimonial-scroll-button:hover {
+      background-color: #312019;
+      color: white;
+    }
+
+    .testimonial-scroll-left {
+      left: 0;
+    }
+
+    .testimonial-scroll-right {
+      right: 0;
+    }
+
+    .testimonial-section-title {
+      font-size: 24px;
+      font-weight: 600;
+      padding-left: 44px;
+      margin-bottom: 24px;
+      position: relative;
+      color: #312019;
+    }
+
+    .testimonial-section-title::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background-color: #5b3417;
+    }
+
+    /* === PROMO SECTION === */
+    .promo-section {
+      padding: 40px 20px;
+      background-color: #ffffff;
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .promo-card {
+      position: relative;
+      height: 600px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .promo-bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: filter 0.4s ease;
+    }
+
+    .promo-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.1);
+      transition: background-color 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px;
+      box-sizing: border-box;
+      color: white;
+    }
+
+    .promo-heading {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .promo-text {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .promo-button {
+      background: white;
+      color: #333;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 25px;
+      cursor: pointer;
+      width: fit-content;
+      transition: all 0.3s ease;
+    }
+
+    .promo-button:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    /* Hover Effects */
+    .promo-card:hover .promo-bg {
+      filter: brightness(0.7);
+    }
+
+    .promo-card:hover .promo-overlay {
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    /* === FOOTER === */
+    footer {
+      background-color: #2f1d18;
+      color: white;
+      width: 100vw;
+    }
+
+    .logo-social-container {
+      text-align: center;
+      padding: 30px 0 20px;
+    }
+
+    .logo-social-container img {
+      width: 140px;
+      margin-bottom: 15px;
+      margin-left: -80rem;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      margin-left: -77rem;
+    }
+
+    .social-icons i {
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .divider {
+      border-top: 1px solid #4c3b36;
+      margin: 0 40px;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .footer-section {
+      flex: 1 1 250px;
+      margin: 20px 0;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+      color: white;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+
+    .contact-section .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: white;
+      color: #2f1d18;
+      border-radius: 25px;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    .timings p {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .bottom-bar {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 40px;
+      border-top: 1px solid #4c3b36;
+      padding: 20px 10px;
+    }
+
+    .bottom-links {
+      margin-bottom: 10px;
+    }
+
+    .bottom-links a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: underline;
+      font-size: 12px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .product-card {
+        min-width: 45%;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .promo-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .product-card {
+        min-width: 80%;
+      }
+
+      .promo-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .promo-card {
+        height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <a href="Guide to html.html">
+          <img src="Wayfair Logo.png" alt="Wayfair Logo">
+        </a>
+      </div>
+      <nav class="nav-links">
+        <a href="Guide to html.html">HOME</a>
+        <a href="#">SHOP</a>
+        <a href="#">BLOG</a>
+        <a href="#">OFFERS</a>
+        <a href="#">WAYFAIR REWARDS</a>
+      </nav>
+      <div class="nav-icons">
+        <img src="Support Icon.png" alt="Support" class="icon">
+        <img src="Profile Icon.png" alt="Profile" class="icon">
+        <a href="CART(Indivisual).html"><img src="Add to cart Icon wayfair.png" alt="Cart" class="icon"></a>
+      </div>
+    </div>
+  </header>
+
+  <div class="search-container">
+    <form action="#">
+      <input type="text" placeholder="Search" class="search-input">
+    </form>
+  </div>
+
+  <!-- Hero Image Carousel -->
+  <div class="hero-carousel">
+    <div class="carousel-images">
+      <img src="2076086.jpg" alt="Image 1">
+      <img src="Furniture2.jpg" alt="Image 2">
+      <img src="Furniture.jpeg" alt="Image 3">
+    </div>
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
+  </div>
+  <br><br><br><br>
+
+  <section class="carousel-section">
+    <h2 class="section-title">SHOP BY ROOM</h2>
+    <div class="carousel">
+      <div class="product-card"><img src="living-room.png" alt="Living Room"><p>Living room</p></div>
+      <div class="product-card"><img src="bedroom.png" alt="Bedroom"><p>Bedroom</p></div>
+      <div class="product-card"><img src="dining-room.png" alt="Dining Room"><p>Dining room & Kitchen</p></div>
+      <div class="product-card"><img src="outdoors.png" alt="Outdoor"><p>Outdoor</p></div>
+      <div class="product-card"><img src="bathroom.png" alt="Bathroom"><p>Bathroom</p></div>
+      <div class="product-card"><img src="homeoffice.png" alt="Office"><p>Office & Workspace</p></div>
+    </div>
+  </section>
+  <br><br>
+
+  <section class="carousel-section">
+    <h2 class="section-title">NEW ARRIVALS</h2>
+    <p class="section-subtitle">Give your space a refresh with new arrivals dropping weekly</p>
+    <div class="carousel">
+      <div class="product-card"><img src="wooden-vase.png"><p>Wooden Vase<br><span class="price">Rs. 299</span></p></div>
+      <div class="product-card"><img src="throw-pillows.png"><p>Throw Pillows<br><span class="price">Rs. 499</span></p></div>
+      <div class="product-card"><img src="ribbed-candles.png"><p>Ribbed Scented..<br><span class="price">Rs. 699</span></p></div>
+      <div class="product-card"><img src="ceramic-toiletry.png"><p>Ceramic Toiletries<br><span class="price">Rs. 369</span></p></div>
+      <div class="product-card"><img src="nordic-candlestand.png"><p>Nordic Candlestick<br><span class="price">Rs. 499</span></p></div>
+    </div>
+  </section>
+
+  <!-- Hover Zoom Cards Section -->
+  <section class="hover-cards">
+    <div class="grid">
+      <div class="card">
+        <div class="card-image" style="background-image: url('Chill.\ Unwind.\ Repeat..jpg');"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h2>Chill. Unwind. Repeat.</h2>
+          <p>Lounge chairs for cuddling up.</p>
+          <button class="shop-btn">SHOP NOW</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image" style="background-image: url('Comfort\ made\ for\ sharing..png');"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <h2>Comfort made for sharing.</h2>
+          <p>Your perfect couch awaits.</p>
+          <button class="shop-btn">SHOP NOW</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promo Section -->
+  <section class="promo-section">
+    <div class="promo-grid">
+      <!-- Card 1 -->
+      <div class="promo-card">
+        <div class="promo-bg" style="background-image: url('Light\ Up\ for\ Less..png')"></div>
+        <div class="promo-overlay">
+          <h2 class="promo-heading">Light Up for Less</h2>
+          <p class="promo-text">50% festive discount on lighting</p>
+          <button class="promo-button">SHOP NOW</button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="promo-card">
+        <div class="promo-bg" style="background-image: url('Rooted\ in\ Style..png')"></div>
+        <div class="promo-overlay">
+          <h2 class="promo-heading">Rooted in Style</h2>
+          <p class="promo-text">Luxury furniture: 50% off</p>
+          <button class="promo-button">SHOP NOW</button>
+        </div>
+      </div>
+      
+      <!-- Card 3 -->
+      <div class="promo-card">
+        <div class="promo-bg" style="background-image: url('Simple.\ Stylish.\ Essential..png')"></div>
+        <div class="promo-overlay">
+          <h2 class="promo-heading">Modern Comfort</h2>
+          <p class="promo-text">New collection at 40% off</p>
+          <button class="promo-button">SHOP NOW</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+    <!-- Testimonial Carousel Section -->
+    <section class="testimonial-section">
+      <h2 class="testimonial-section-title">WHAT OUR CUSTOMERS SAY</h2>
+      <div class="testimonial-carousel-container">
+        <button class="testimonial-scroll-button testimonial-scroll-left" onclick="scrollTestimonial(-1)">‹</button>
+        <div class="testimonial-carousel" id="testimonialCarousel">
+          <!-- Card 1 -->
+          <div class="testimonial-card">
+            <img src="TARA.png" alt="Tara Henson" />
+            <div class="testimonial-content">
+              <h3>Tara Henson</h3>
+              <p>"I absolutely love my new two-seater couch! It's the perfect size for my small living room and so comfy for curling up with a book."</p>
+            </div>
+          </div>
+  
+          <!-- Card 2 -->
+          <div class="testimonial-card">
+            <img src="SARAH.png" alt="Sarah T." />
+            <div class="testimonial-content">
+              <h3>Sarah T.</h3>
+              <p>"It beautifully complements my space and adds natural warmth. The quality is fantastic. Highly recommend!"</p>
+            </div>
+          </div>
+  
+          <!-- Card 3 -->
+          <div class="testimonial-card">
+            <img src="Paige.png" alt="Paige Winters" />
+            <div class="testimonial-content">
+              <h3>Paige Winters</h3>
+              <p>"This is just the right size and adds a nice touch of greenery. I'm getting so many compliments on it!"</p>
+            </div>
+          </div>
+  
+          <!-- Card 4 -->
+          <div class="testimonial-card">
+            <img src="Jessica.png" alt="Jessica M." />
+            <div class="testimonial-content">
+              <h3>Jessica M.</h3>
+              <p>"We're so happy with our new sofa! It's incredibly comfortable and perfect for family movie nights."</p>
+            </div>
+          </div>
+  
+          <!-- Card 5 -->
+          <div class="testimonial-card">
+            <img src="Ethan.png" alt="Ethan Miller" />
+            <div class="testimonial-content">
+              <h3>Ethan Miller</h3>
+              <p>"My girlfriend and I love our new small leather sofa. It's stylish, comfy, and super easy to clean."</p>
+            </div>
+          </div>
+        </div>
+        <button class="testimonial-scroll-button testimonial-scroll-right" onclick="scrollTestimonial(1)">›</button>
+      </div>
+    </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="logo-social-container">
+      <img src="Wayfair logo.png" alt="Wayfair logo">
+      <div class="social-icons">
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-linkedin-in"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-pinterest"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-google"></i>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>ABOUT US</h3>
+        <ul>
+          <li><a href="#">About Wayfair</a></li>
+          <li><a href="#">Wayfair Rewards</a></li>
+          <li><a href="#">Wayfair Professional</a></li>
+          <li><a href="#">Gift Cards</a></li>
+          <li><a href="#">Wayfair Credit Cards</a></li>
+          <li><a href="#">Wayfair Financing</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Sell on Wayfair</a></li>
+          <li><a href="#">Creators</a></li>
+          <li><a href="#">Investor Relations</a></li>
+          <li><a href="#">Advertise With Us</a></li>
+          <li><a href="#">Locations</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>CUSTOMER SERVICE</h3>
+        <ul>
+          <li><a href="#">My orders</a></li>
+          <li><a href="#">My account</a></li>
+          <li><a href="#">Track My Order</a></li>
+          <li><a href="#">Wayfair Accessibility Statement</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Ideas & Advice</a></li>
+          <li><a href="#">Product Recalls</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section contact-section">
+        <h3>CONTACT US</h3>
+        <div class="button" onclick="quickHelp()"><i class="fas fa-clock"></i> Quick help</div>
+        <div class="button" onclick="callUs()"><i class="fas fa-phone"></i> Call Us</div>
+        <div class="timings">
+          <p><strong>Shop Timings</strong></p>
+          <p>Closed. Opens at 8:00 AM</p>
+          <p>Mon - Fri: 8:00 AM - 11:59 PM</p>
+          <p>Sat: 8:00 AM - 8:00 PM</p>
+          <p>Sun: 9:00 AM - 6:00 PM</p>
+          <p>All times Eastern</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="bottom-links">
+        <a href="#">Terms of use</a> |
+        <a href="#">Privacy Policy</a> |
+        <a href="#">Your privacy Rights & Choices</a>
+      </div>
+      <p>&copy; 2002 - 2024 by Wayfair LLC, 4 Copley place, 7th Floor, Boston, MA02116</p>
+    </div>
+  </footer>
+
+  <script>
+    // Hero Carousel Script
+    const carouselImages = document.querySelector('.carousel-images');
+    const images = document.querySelectorAll('.carousel-images img');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+
+    let currentIndex = 0;
+    let autoSlideInterval;
+
+    function updateCarousel() {
+      carouselImages.style.transform = `translateX(${-currentIndex * 100}%)`;
+    }
+
+    function moveToNextSlide() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateCarousel();
+    }
+
+    function moveToPrevSlide() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateCarousel();
+    }
+
+    nextBtn.addEventListener('click', () => {
+      moveToNextSlide();
+      restartAutoSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      moveToPrevSlide();
+      restartAutoSlide();
+    });
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(moveToNextSlide, 3000);
+    }
+
+    function restartAutoSlide() {
+      clearInterval(autoSlideInterval);
+      startAutoSlide();
+    }
+
+    function initCarousel() {
+      updateCarousel();
+      startAutoSlide();
+    }
+
+    window.addEventListener('resize', updateCarousel);
+    window.addEventListener('load', initCarousel);
+
+    // Hover Cards Button Functionality
+    document.querySelectorAll('.shop-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        alert('Redirecting to product category...');
+        // In a real implementation, this would navigate to the appropriate category page
+      });
+    });
+
+    // Testimonial Carousel Script
+    function scrollTestimonial(direction) {
+      const carousel = document.getElementById("testimonialCarousel");
+      const scrollAmount = 380; // width + gap
+      carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+
+    // Footer Button Functions
+    function quickHelp() {
+      alert('Opening quick help options...');
+    }
+
+    function callUs() {
+      alert('Calling customer support...');
+    }
+  </script>
+</body>
+</html>

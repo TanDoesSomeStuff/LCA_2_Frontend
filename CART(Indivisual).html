@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wayfair Cart</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff;
+    }
+
+    /* Header */
+    .header {
+      background-color: #312019;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin-left: 5rem;
+      margin-right: auto; /* This pushes nav-links to the left */
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-icons .icon {
+      height: 32px;
+      width: 32px;
+      object-fit: contain;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      gap: 2rem;
+      position: relative;
+    }
+
+    /* Cart Section (Left) */
+    .cart-left {
+      flex: 2;
+    }
+
+    .cart-left h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cart-left p {
+      color: #555;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .free-shipping {
+      border: 1px dashed #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .free-shipping-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    .keep-shopping {
+      text-decoration: none;
+      color: #4b3621;
+      font-weight: bold;
+    }
+
+    .keep-shopping:hover {
+      text-decoration: underline;
+    }
+
+    .progress-bar {
+      background: #eee;
+      height: 6px;
+      border-radius: 5px;
+      margin-top: 0.8rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 60%;
+      background: #4b3621;
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    /* Cart item */
+    .cart-item {
+      display: flex;
+      background: #fff;
+      align-items: flex-start;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #eee;
+      position: relative;
+    }
+
+    .product-img {
+      width: 100px;
+      height: auto;
+      margin-right: 1.5rem;
+    }
+
+    .item-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .item-details h2 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-right: 1rem;
+    }
+
+    .remove-btn-top {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .remove-icon {
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    .quantity-section {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .quantity-control button {
+      width: 30px;
+      height: 30px;
+      background-color: #f8f8f8;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quantity-control button:hover {
+      background-color: #eee;
+    }
+
+    .quantity-control span {
+      width: 40px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .item-price {
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    .remove-btn-bottom {
+      background: none;
+      border: none;
+      color: #4b3621;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      padding: 0;
+    }
+
+    /* Summary (Right) */
+    .cart-summary {
+      width: 320px;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 100px;
+      align-self: flex-start;
+    }
+
+    .cart-summary h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .summary-row.total {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #4b3621;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .checkout-btn:hover {
+      background-color: #3a2a19;
+    }
+
+    /* New styles for added functionality */
+    .highlight {
+      background-color: #fff8e1;
+      transition: background-color 0.3s ease;
+    }
+
+    .coupon-applied {
+      color: #388e3c;
+      font-weight: bold;
+    }
+
+    .coupon-input-container {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .coupon-input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .apply-coupon-btn {
+      padding: 8px 12px;
+      background-color: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .container {
+        flex-direction: column;
+      }
+      
+      .cart-summary {
+        width: 100%;
+        position: static;
+        margin-top: 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cart-item {
+        flex-direction: column;
+      }
+      
+      .product-img {
+        width: 80px;
+        margin-bottom: 1rem;
+      }
+      
+      .item-title {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <a href="Guide to html.html"><img src="Wayfair Logo.png" alt="Wayfair Logo"></a>
+      </div>
+      <nav class="nav-links">
+        <a href="Guide to html.html">HOME</a>
+        <a href="#">SHOP</a>
+        <a href="#">BLOG</a>
+        <a href="#">OFFERS</a>
+        <a href="#">WAYFAIR REWARDS</a>
+      </nav>
+      <div class="nav-icons">
+        <img src="Support Icon.png" alt="Support" class="icon">
+        <img src="Profile Icon.png" alt="Profile" class="icon">
+        <img src="Add to cart Icon wayfair.png" alt="Cart" class="icon">
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="cart-left">
+      <h1>Your cart</h1>
+      <p>1 item in the cart</p>
+
+      <div class="free-shipping">
+        <div class="free-shipping-top">
+          <span>You're Rs500 away from FREE SHIPPING</span>
+          <a href="#" class="keep-shopping">Keep Shopping</a>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="cart-item" id="cart-item">
+        <img src="Ribbed Scented Candles.png" alt="Ribbed Scented Candles" class="product-img">
+        <div class="item-details">
+          <div class="item-title">
+            <h2>Ribbed Scented Candles (4 pack)</h2>
+            <button class="remove-btn-top" onclick="confirmRemove()">
+              <img src="Cross Icon.png" alt="Remove" class="remove-icon">
+            </button>
+          </div>
+          <div class="quantity-section">
+            <div class="quantity-control">
+              <button aria-label="Decrease quantity" id="decrease-btn">-</button>
+              <span id="quantity" aria-live="polite">1</span>
+              <button aria-label="Increase quantity" id="increase-btn">+</button>
+            </div>
+            <div class="item-price">Rs. <span id="item-price">699</span></div>
+          </div>
+          <button class="remove-btn-bottom" id="remove-btn">Remove</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary Section -->
+    <aside class="cart-summary">
+      <h2>Summary</h2>
+      <div class="summary-row">
+        <span>Subtotal (<span id="item-count">1</span> Items)</span>
+        <span id="subtotal">Rs. 699</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping & Handling</span>
+        <span>Rs. 25</span>
+      </div>
+      <div class="summary-row">
+        <span>Tax</span>
+        <span>Rs. 17.5</span>
+      </div>
+      <div class="summary-row" id="discount-row">
+        <span>Discount & Offers</span>
+        <span>Rs. 0.0</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total Amount</span>
+        <span id="total">Rs. 741.5</span>
+      </div>
+      
+      <!-- Coupon input section that will be added dynamically -->
+      <div id="coupon-section"></div>
+      
+      <button class="checkout-btn" id="checkout-btn">Checkout</button>
+    </aside>
+  </div>
+
+  <script>
+    // Custom function to calculate cart totals (Requirement 1: Custom function)
+    function calculateCartTotals() {
+      const subtotal = quantity * pricePerUnit;
+      const tax = subtotal * taxRate;
+      const total = subtotal + shippingCost + tax - discount;
+      
+      document.getElementById('quantity').textContent = quantity;
+      document.getElementById('item-count').textContent = quantity;
+      document.getElementById('item-price').textContent = pricePerUnit.toFixed(2);
+      document.getElementById('subtotal').textContent = `Rs. ${subtotal.toFixed(2)}`;
+      document.getElementById('total').textContent = `Rs. ${total.toFixed(2)}`;
+      
+      // Update progress bar
+      const progressFill = document.querySelector('.progress-fill');
+      const progressPercentage = Math.min(100, (subtotal / (subtotal + 500)) * 100);
+      progressFill.style.width = `${progressPercentage}%`;
+      
+      // Update free shipping message if applicable
+      if (subtotal >= 500) {
+        document.querySelector('.free-shipping-top span').textContent = 'You qualify for FREE SHIPPING!';
+      }
+    }
+
+    // Initial cart values
+    let quantity = 1;
+    const pricePerUnit = 699;
+    const shippingCost = 25;
+    const taxRate = 0.025; // 2.5% tax
+    let discount = 0;
+
+    // DOM traversal methods (Requirement 2: DOM traversal methods)
+    const cartItem = document.getElementById('cart-item'); // getElementById
+    const summaryRows = document.querySelectorAll('.summary-row'); // querySelectorAll
+
+    // Mouse-based events (Requirement 4: Mouse events)
+    // 1. Highlight cart item on mouseover
+    cartItem.addEventListener('mouseover', function() {
+      this.classList.add('highlight');
+    });
+    
+    cartItem.addEventListener('mouseout', function() {
+      this.classList.remove('highlight');
+    });
+
+    // 2. Click events for quantity buttons
+    document.getElementById('increase-btn').addEventListener('click', function() {
+      quantity++;
+      calculateCartTotals();
+    });
+
+    document.getElementById('decrease-btn').addEventListener('click', function() {
+      if (quantity > 1) {
+        quantity--;
+        calculateCartTotals();
+      }
+    });
+
+    // Remove button event
+    document.getElementById('remove-btn').addEventListener('click', confirmRemove);
+
+    function confirmRemove() {
+      if(confirm('Remove this item from your cart?')) {
+        // DOM tree navigation (Requirement 6: DOM tree navigation)
+        const cartLeftSection = cartItem.parentElement; // parentElement
+        const itemTitle = cartItem.firstElementChild.nextElementSibling.firstElementChild; // firstElementChild and nextElementSibling
+        
+        // Change style by modifying class list (Requirement 3: Changing style via classList)
+        itemTitle.classList.add('coupon-applied');
+        itemTitle.querySelector('h2').textContent = 'Removing item...';
+        
+        setTimeout(() => {
+          cartLeftSection.removeChild(cartItem); // remove from DOM
+          alert('Item removed from cart!');
+        }, 1000);
+      }
+    }
+
+    // Key-based event (Requirement 5: Key event)
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'c' && event.ctrlKey) {
+        // Add coupon input when Ctrl+C is pressed (Requirement 7: Add/Modify DOM element)
+        const couponSection = document.getElementById('coupon-section');
+        if (!couponSection.innerHTML) {
+          couponSection.innerHTML = `
+            <div class="coupon-input-container">
+              <input type="text" class="coupon-input" placeholder="Enter coupon code" id="coupon-input">
+              <button class="apply-coupon-btn" id="apply-coupon">Apply</button>
+            </div>
+          `;
+          
+          document.getElementById('apply-coupon').addEventListener('click', function() {
+            const couponCode = document.getElementById('coupon-input').value;
+            if (couponCode === 'WAYFAIR10') {
+              discount = pricePerUnit * quantity * 0.1; // 10% discount
+              document.getElementById('discount-row').lastElementChild.textContent = `-Rs. ${discount.toFixed(2)}`;
+              calculateCartTotals();
+              this.textContent = 'Applied!';
+              this.style.backgroundColor = '#4CAF50';
+              this.style.color = 'white';
+            } else {
+              alert('Invalid coupon code');
+            }
+          });
+        }
+      }
+    });
+
+    // Initialize cart
+    calculateCartTotals();
+  </script>
+</body>
+</html>
